@@ -11,9 +11,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        generateTabBar()
+        
     }
 
+    private func generateTabBar() {
+        let viewControllers = [
+        generateVC(viewController: BrowseViewController, title: "Browse", image: UIImage(systemName: "house"))
+        ]
+    }
 
+    private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
+        viewController.tabBarItem.title = title
+        viewController.tabBarItem.image = image
+        return viewController
+    }
 }
 
