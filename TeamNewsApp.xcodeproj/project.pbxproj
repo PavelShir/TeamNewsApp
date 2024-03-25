@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		313008BE2BA78A4900F21BAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313008BD2BA78A4900F21BAF /* AppDelegate.swift */; };
 		313008C02BA78A4900F21BAF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313008BF2BA78A4900F21BAF /* SceneDelegate.swift */; };
-		313008C22BA78A4900F21BAF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313008C12BA78A4900F21BAF /* ViewController.swift */; };
+		313008C22BA78A4900F21BAF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313008C12BA78A4900F21BAF /* TabBarViewController.swift */; };
 		313008C72BA78A4B00F21BAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 313008C62BA78A4B00F21BAF /* Assets.xcassets */; };
 		313008CA2BA78A4B00F21BAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 313008C82BA78A4B00F21BAF /* LaunchScreen.storyboard */; };
+		31676CF22BB22BC2003CB38C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF12BB22BC2003CB38C /* BrowseViewController.swift */; };
+		31676CF42BB22BEA003CB38C /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */; };
+		31676CF62BB22C08003CB38C /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF52BB22C08003CB38C /* BookmarksViewController.swift */; };
 		CB01B4B12BAA1BA500ADE6AD /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB01B4B02BAA1BA500ADE6AD /* TermsViewController.swift */; };
 		CBCA9FEA2BA87E480016C292 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA9FE92BA87E480016C292 /* OnboardingViewController.swift */; };
 		CBCA9FEC2BA88F9F0016C292 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA9FEB2BA88F9F0016C292 /* OnboardingPageViewController.swift */; };
@@ -29,10 +32,13 @@
 		313008BA2BA78A4900F21BAF /* TeamNewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamNewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		313008BD2BA78A4900F21BAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		313008BF2BA78A4900F21BAF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		313008C12BA78A4900F21BAF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		313008C12BA78A4900F21BAF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		313008C62BA78A4B00F21BAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		313008C92BA78A4B00F21BAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		313008CB2BA78A4B00F21BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31676CF12BB22BC2003CB38C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		31676CF52BB22C08003CB38C /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		CB01B4B02BAA1BA500ADE6AD /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		CBCA9FE92BA87E480016C292 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		CBCA9FEB2BA88F9F0016C292 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
@@ -78,11 +84,8 @@
 			children = (
 				313008BD2BA78A4900F21BAF /* AppDelegate.swift */,
 				313008BF2BA78A4900F21BAF /* SceneDelegate.swift */,
-				313008C12BA78A4900F21BAF /* ViewController.swift */,
 				CBCAF5392BAB1F480020153F /* Model */,
-				CBCAF53A2BAB41990020153F /* Onboarding */,
-				CBCAF53B2BAB41A90020153F /* Profile */,
-				CBCAF53C2BAB41B50020153F /* Login */,
+				CBCAF53A2BAB41990020153F /* Controllers */,
 				313008C62BA78A4B00F21BAF /* Assets.xcassets */,
 				313008C82BA78A4B00F21BAF /* LaunchScreen.storyboard */,
 				313008CB2BA78A4B00F21BAF /* Info.plist */,
@@ -111,30 +114,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		CBCAF53A2BAB41990020153F /* Onboarding */ = {
+		CBCAF53A2BAB41990020153F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				CBCA9FE92BA87E480016C292 /* OnboardingViewController.swift */,
 				CBCA9FEB2BA88F9F0016C292 /* OnboardingPageViewController.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		CBCAF53B2BAB41A90020153F /* Profile */ = {
-			isa = PBXGroup;
-			children = (
+				313008C12BA78A4900F21BAF /* TabBarViewController.swift */,
+				31676CF12BB22BC2003CB38C /* BrowseViewController.swift */,
+				31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */,
+				31676CF52BB22C08003CB38C /* BookmarksViewController.swift */,
 				CB01B4B02BAA1BA500ADE6AD /* TermsViewController.swift */,
 				CBCAF5272BAAFB960020153F /* ProfileViewController.swift */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		CBCAF53C2BAB41B50020153F /* Login */ = {
-			isa = PBXGroup;
-			children = (
 				CBCAF5352BAB152E0020153F /* LoginViewController.swift */,
 			);
-			path = Login;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,9 +205,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBCAF5362BAB152E0020153F /* LoginViewController.swift in Sources */,
-				313008C22BA78A4900F21BAF /* ViewController.swift in Sources */,
+				313008C22BA78A4900F21BAF /* TabBarViewController.swift in Sources */,
+				31676CF42BB22BEA003CB38C /* CategoriesViewController.swift in Sources */,
 				313008BE2BA78A4900F21BAF /* AppDelegate.swift in Sources */,
+				31676CF22BB22BC2003CB38C /* BrowseViewController.swift in Sources */,
 				CBCA9FEC2BA88F9F0016C292 /* OnboardingPageViewController.swift in Sources */,
+				31676CF62BB22C08003CB38C /* BookmarksViewController.swift in Sources */,
 				313008C02BA78A4900F21BAF /* SceneDelegate.swift in Sources */,
 				CBCAF5282BAAFB960020153F /* ProfileViewController.swift in Sources */,
 				CBCA9FEA2BA87E480016C292 /* OnboardingViewController.swift in Sources */,
