@@ -12,7 +12,7 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         generateTabBar()
-        
+        setupTabBar()
     }
 
     private func generateTabBar() {
@@ -29,5 +29,13 @@ class TabBarViewController: UITabBarController {
         viewController.tabBarItem.image = image
         return viewController
     }
+    
+    private func setupTabBar() {
+            tabBar.layer.borderWidth = 0.5
+            tabBar.layer.borderColor = UIColor.lightGray.cgColor
+            tabBar.layer.cornerRadius = 20
+            tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+
 }
 
