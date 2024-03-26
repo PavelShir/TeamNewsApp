@@ -56,7 +56,7 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, ad
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         element.tintColor = UIColor(named: K.Colors.greyPrimary)
         element.translatesAutoresizingMaskIntoConstraints = false
         return element

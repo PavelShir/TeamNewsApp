@@ -23,7 +23,7 @@ class LanguageViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         element.tintColor = UIColor(named: K.Colors.greyPrimary)
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
