@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let window = UIWindow(frame: UIScreen.main.bounds)
 
-        window.rootViewController = OnboardingViewController()
+        window.rootViewController = LanguageViewController()
 
         window.makeKeyAndVisible()
         

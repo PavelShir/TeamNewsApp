@@ -9,6 +9,7 @@ import UIKit
 
 class BrowseCollectionViewCell: UICollectionViewCell {
     
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
