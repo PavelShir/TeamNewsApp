@@ -25,17 +25,19 @@ class ProfileViewController: UIViewController {
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.image = UIImage(systemName: "plus")
         photoImageView.tintColor = .gray
+        photoImageView.isUserInteractionEnabled = true
         
         return photoImageView
     }()
     
-    private let nameLabel: UITextField = {
-        let nameLabel = UITextField()
-        nameLabel.placeholder = "Your Name"
-        nameLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        nameLabel.textColor = .black
+    private let nameField: UITextField = {
+        let nameField = UITextField()
+        nameField.font = .systemFont(ofSize: 16, weight: .semibold)
+        nameField.textColor = .black
+        nameField.returnKeyType = .done
+        nameField.layer.cornerRadius = 12
         
-        return nameLabel
+        return nameField
     }()
     
     private let mailLabel: UILabel = {
@@ -71,10 +73,12 @@ class ProfileViewController: UIViewController {
         
         configure()
         setupUI()
+        view.layoutIfNeeded()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
         photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
         photoImageView.clipsToBounds = true
         
@@ -82,10 +86,13 @@ class ProfileViewController: UIViewController {
     
     private func configure() {
         user = UserStorageManager.shared.getUserData()
-        nameLabel.text = user?.name
+        nameField.text = user?.name
         mailLabel.text = user?.mail
-        photoImageView.image = user?.photo?.image
-        let tap = UITapGestureRecognizer(target: self, action: #selector(photoTapped))
+        if let photo = user?.photoName {
+            photoImageView.image = UIImage(contentsOfFile: getDocumentsDirectory().appendingPathComponent(photo).path)
+        }
+        nameField.delegate = self
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         photoImageView.addGestureRecognizer(tap)
     }
     
@@ -94,7 +101,7 @@ class ProfileViewController: UIViewController {
         
         view.addSubview(profileLabel)
         view.addSubview(photoImageView)
-        view.addSubview(nameLabel)
+        view.addSubview(nameField)
         view.addSubview(mailLabel)
         view.addSubview(languageButton)
         view.addSubview(termsButton)
@@ -111,13 +118,13 @@ class ProfileViewController: UIViewController {
             photoImageView.heightAnchor.constraint(equalTo: photoImageView.widthAnchor),
             photoImageView.leadingAnchor.constraint(equalTo: profileLabel.leadingAnchor),
             
-            nameLabel.bottomAnchor.constraint(equalTo: photoImageView.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 24),
-            nameLabel.trailingAnchor.constraint(equalTo: profileLabel.trailingAnchor),
+            nameField.bottomAnchor.constraint(equalTo: photoImageView.centerYAnchor),
+            nameField.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 24),
+            nameField.trailingAnchor.constraint(equalTo: profileLabel.trailingAnchor),
             
-            mailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            mailLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            mailLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+            mailLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 8),
+            mailLabel.leadingAnchor.constraint(equalTo: nameField.leadingAnchor),
+            mailLabel.trailingAnchor.constraint(equalTo: nameField.trailingAnchor),
             
             languageButton.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 44),
             languageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -139,11 +146,53 @@ class ProfileViewController: UIViewController {
         present(termsVC, animated: true)
     }
     
-    @objc private func photoTapped(_ sender: UITapGestureRecognizer? = nil) {
+    @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         
-        //Тут будет выбор фото для профиля
-        
-        print("photo tapped")
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        print("present")
+        present(picker, animated: true)
+        print("present")
+    }
+    
+    private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        let imageName = UUID().uuidString
+        UserStorageManager.shared.updateUserPhoto(photoName: imageName)
+        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
+        if let jpegData = image.jpegData(compressionQuality: 0.8) {
+            try? jpegData.write(to: imagePath)
+        }
+        dismiss(animated: true) {
+            self.configure()
+            self.view.setNeedsLayout()
+        }
+    }
+}
+
+extension ProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.backgroundColor = .grayLight
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.backgroundColor = nil
+        guard let newName = textField.text else { return }
+        UserStorageManager.shared.updateUserName(name: newName)
     }
 }
 
