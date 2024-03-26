@@ -43,31 +43,35 @@ class LoginViewController: UIViewController {
     }()
     
     private let userNameTextField: UITextField = {
-        let userNameTextField = UITextField(picName: "person")
+        let userNameTextField = UITextField(picName: "person", isSecure: false)
         userNameTextField.placeholder = "Username"
         
         return userNameTextField
     }()
     
     private let mailTextField: UITextField = {
-        let mailTextField = UITextField(picName: "envelope")
+        let mailTextField = UITextField(picName: "envelope", isSecure: false)
         mailTextField.placeholder = "Email Address"
+        mailTextField.keyboardType = .emailAddress
         
         return mailTextField
     }()
     
     private let passwordTextField: UITextField = {
-        let passwordTextField = UITextField(picName: "lock")
+        let passwordTextField = UITextField(picName: "lock", isSecure: true)
         passwordTextField.placeholder = "Password"
         passwordTextField.isSecureTextEntry = true
+        passwordTextField.textContentType = .newPassword
         
         return passwordTextField
     }()
     
     private let repeatPasswordTextField: UITextField = {
-        let repeatPasswordTextField = UITextField(picName: "lock")
+        let repeatPasswordTextField = UITextField(picName: "lock", isSecure: true)
         repeatPasswordTextField.placeholder = "Repeat Password"
         repeatPasswordTextField.isSecureTextEntry = true
+        repeatPasswordTextField.textContentType = .newPassword
+        repeatPasswordTextField.addTarget(self, action: #selector(repeatedPasswordChanged), for: .editingChanged)
         
         return repeatPasswordTextField
     }()
@@ -103,24 +107,29 @@ class LoginViewController: UIViewController {
         return signInBottomButton
     }()
     
+    private let passwordCompareLabel: UILabel = {
+        let passwordCompareLabel = UILabel()
+        passwordCompareLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        passwordCompareLabel.textAlignment = .right
+        passwordCompareLabel.isHidden = true
+        
+        return passwordCompareLabel
+    }()
+    
     init() {
         if let user = UserStorageManager.shared.getUserData() {
             mode = .signIn
         } else {
             mode = .signUp
         }
+        
         super.init(nibName: nil, bundle: nil)
+        configure()
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        configure()
-        setupUI()
     }
 
     private func configure() {
@@ -138,15 +147,17 @@ class LoginViewController: UIViewController {
             loginLabel.text = "Welcome Back 👋"
             descriptionLabel.text = "I am happy to see you again. You can continue where you left off by logging in"
             signInButton.setTitle("Sign In", for: .normal)
-            signInBottomButton.setTitle("Sign In", for: .normal)
+            signInBottomButton.setTitle("Sign Up", for: .normal)
             signInLabel.text = "Don't have an account?"
         } else {
-            mainStack = UIStackView(arrangedSubviews: [userNameTextField, mailTextField, passwordTextField, repeatPasswordTextField, signInButton])
+            mainStack = UIStackView(arrangedSubviews: [userNameTextField, mailTextField, passwordTextField, repeatPasswordTextField])
             loginLabel.text = "Welcome to NewsToDay"
             descriptionLabel.text = "Hello, I guess you are new around here. You can start using the application after sign up"
             signInButton.setTitle("Sign Up", for: .normal)
-            signInBottomButton.setTitle("Sign Up", for: .normal)
+            signInBottomButton.setTitle("Sign In", for: .normal)
             signInLabel.text = "Already have an account?"
+            view.addSubview(passwordCompareLabel)
+            view.addSubview(signInButton)
         }
         mainStack.axis = .vertical
         mainStack.spacing = 16
@@ -175,6 +186,16 @@ class LoginViewController: UIViewController {
             bottomStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             bottomStack.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        
+        if mode == .signUp {
+            NSLayoutConstraint.activate([
+                passwordCompareLabel.topAnchor.constraint(equalTo: mainStack.bottomAnchor, constant: 10),
+                passwordCompareLabel.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor),
+                signInButton.topAnchor.constraint(equalTo: passwordCompareLabel.bottomAnchor, constant: 10),
+                signInButton.leadingAnchor.constraint(equalTo: mainStack.leadingAnchor),
+                signInButton.trailingAnchor.constraint(equalTo: mainStack.trailingAnchor)
+            ])
+        }
     }
     
     @objc private func signInTapped(_ sender: UIButton) {
@@ -183,29 +204,53 @@ class LoginViewController: UIViewController {
             passwordTextField.endEditing(true)
             if UserStorageManager.shared.login(mail: mailTextField.text ?? "", password: passwordTextField.text ?? "") {
                 
-                //Здесь переход на главную
-                
+                let tabBarVC = TabBarViewController()
+                tabBarVC.modalPresentationStyle = .fullScreen
+                present(tabBarVC, animated: true)
                 print("go to Main Page")
+                
             } else {
                 let alert = UIAlertController(title: "Wrong email or password", message: "Please, check it carefully and try again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
             }
         } else {
-            userNameTextField.endEditing(true)
-            mailTextField.endEditing(true)
-            passwordTextField.endEditing(true)
-            UserStorageManager.shared.saveUserData(User(name: userNameTextField.text ?? "", mail: mailTextField.text ?? "", password: passwordTextField.text ?? ""))
-            
-            //Здесь переход на главную
-            
-            print("go to Main Page")
+            if passwordCompareLabel.textColor == .green {
+                userNameTextField.endEditing(true)
+                mailTextField.endEditing(true)
+                passwordTextField.endEditing(true)
+                UserStorageManager.shared.saveNewUser(User(name: userNameTextField.text ?? "", mail: mailTextField.text ?? "", password: passwordTextField.text ?? ""))
+                
+                let tabBarVC = TabBarViewController()
+                tabBarVC.modalPresentationStyle = .fullScreen
+                present(tabBarVC, animated: true)
+                print("go to Main Page")
+            } else {
+                let alert = UIAlertController(title: "Passwords doesn't match", message: "Please, try to repeat new password again", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+            }
         }
     }
     
     @objc private func switchMode(_ sender: UIButton) {
         mode.toggle()
+        configure()
+        setupUI()
         view.setNeedsLayout()
     }
+    
+    @objc private func repeatedPasswordChanged(_ sender: UITextField) {
+        if passwordTextField.text != "" {
+            passwordCompareLabel.isHidden = false
+            if passwordTextField.text == repeatPasswordTextField.text {
+                passwordCompareLabel.textColor = .green
+                passwordCompareLabel.text = "Passwords match"
+            } else {
+                passwordCompareLabel.textColor = .red
+                passwordCompareLabel.text = "Passwords doesn't match"
+            }
+        }
+    }
+    
 }
 
 extension LoginViewController: UITextFieldDelegate {
@@ -216,14 +261,18 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.backgroundColor == .grayLight {
-            textField.becameActive()
-        }
+        textField.becameActive()
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignActive()
+    }
+
 }
 
 extension UITextField {
-    convenience init(picName: String) {
+    
+    convenience init(picName: String, isSecure: Bool) {
         self.init()
         returnKeyType = .done
         font = .systemFont(ofSize: 16, weight: .regular)
@@ -242,6 +291,23 @@ extension UITextField {
         leftViewMode = .always
         leftView?.tintColor = .darkGray
         
+        if isSecure {
+            let container = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            let showPasswordButton = UIButton(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            showPasswordButton.imageView?.contentMode = .scaleAspectFit
+            showPasswordButton.addTarget(self, action: #selector(showPasswordTapped), for: .touchUpInside)
+            container.addSubview(showPasswordButton)
+            
+            rightView = container
+            rightViewMode = .always
+            rightView?.tintColor = .darkGray
+        }
+        
+    }
+    
+    @objc private func showPasswordTapped(_ sender: UIButton) {
+        isSecureTextEntry.toggle()
     }
     
     func becameActive() {
@@ -250,6 +316,14 @@ extension UITextField {
         layer.borderColor = UIColor.mainBlue.cgColor
         layer.borderWidth = 1
         leftView?.tintColor = .mainBlue
-        
+        rightView?.tintColor = .mainBlue
+    }
+    
+    func resignActive() {
+        backgroundColor = .grayLight
+        textColor = .darkGray
+        layer.borderWidth = 0
+        leftView?.tintColor = .darkGray
+        rightView?.tintColor = .darkGray
     }
 }
