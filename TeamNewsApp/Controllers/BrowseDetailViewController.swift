@@ -8,6 +8,7 @@
 import UIKit
 
 class BrowseDetailViewController: UIViewController {
+    
     var category: String?
     var article: NewsArticle?
     

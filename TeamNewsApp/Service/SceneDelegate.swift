@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
-        window.rootViewController = OnboardingViewController()
+        window.rootViewController = LanguageViewController()
 
         window.makeKeyAndVisible()
         

@@ -12,6 +12,8 @@
 		313008C22BA78A4900F21BAF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313008C12BA78A4900F21BAF /* TabBarViewController.swift */; };
 		313008C72BA78A4B00F21BAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 313008C62BA78A4B00F21BAF /* Assets.xcassets */; };
 		313008CA2BA78A4B00F21BAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 313008C82BA78A4B00F21BAF /* LaunchScreen.storyboard */; };
+		313B3B352BB3580F004B837D /* BrowseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313B3B342BB3580F004B837D /* BrowseCollectionViewCell.swift */; };
+		313B3B372BB3581E004B837D /* BrowseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313B3B362BB3581E004B837D /* BrowseDetailViewController.swift */; };
 		31676CF22BB22BC2003CB38C /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF12BB22BC2003CB38C /* BrowseViewController.swift */; };
 		31676CF42BB22BEA003CB38C /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */; };
 		31676CF62BB22C08003CB38C /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31676CF52BB22C08003CB38C /* BookmarksViewController.swift */; };
@@ -43,6 +45,8 @@
 		313008C62BA78A4B00F21BAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		313008C92BA78A4B00F21BAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		313008CB2BA78A4B00F21BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		313B3B342BB3580F004B837D /* BrowseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCollectionViewCell.swift; sourceTree = "<group>"; };
+		313B3B362BB3581E004B837D /* BrowseDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseDetailViewController.swift; sourceTree = "<group>"; };
 		31676CF12BB22BC2003CB38C /* BrowseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		31676CF52BB22C08003CB38C /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 				31676D022BB24C6A003CB38C /* LanguageViewController.swift */,
 				31676D002BB24C5B003CB38C /* Constants.swift */,
 				31676D032BB24C6A003CB38C /* ProfileTermsViewController.swift */,
+				313B3B342BB3580F004B837D /* BrowseCollectionViewCell.swift */,
+				313B3B362BB3581E004B837D /* BrowseDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -243,6 +249,7 @@
 				313008BE2BA78A4900F21BAF /* AppDelegate.swift in Sources */,
 				31676CF22BB22BC2003CB38C /* BrowseViewController.swift in Sources */,
 				CBCA9FEC2BA88F9F0016C292 /* OnboardingPageViewController.swift in Sources */,
+				313B3B372BB3581E004B837D /* BrowseDetailViewController.swift in Sources */,
 				31676D062BB24C6B003CB38C /* ProfileTermsViewController.swift in Sources */,
 				31676CF62BB22C08003CB38C /* BookmarksViewController.swift in Sources */,
 				313008C02BA78A4900F21BAF /* SceneDelegate.swift in Sources */,
@@ -251,6 +258,7 @@
 				CBCA9FEA2BA87E480016C292 /* OnboardingViewController.swift in Sources */,
 				CB01B4B12BAA1BA500ADE6AD /* TermsViewController.swift in Sources */,
 				31676D072BB24C6B003CB38C /* ArticleViewController.swift in Sources */,
+				313B3B352BB3580F004B837D /* BrowseCollectionViewCell.swift in Sources */,
 				CBCAF5382BAB1C760020153F /* User.swift in Sources */,
 				CBCAF5342BAB12B60020153F /* UserStorageManager.swift in Sources */,
 			);
