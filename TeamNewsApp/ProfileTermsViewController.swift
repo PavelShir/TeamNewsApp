@@ -1,5 +1,5 @@
 //
-//  TermsViewController.swift
+//  ProfileTermsViewController.swift
 //  TeamNewsApp
 //
 //  Created by Сергей П on 20.03.2024.
@@ -97,6 +97,8 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, ad
         contentView.addSubview(nameVCLabel)
         contentView.addSubview(backButton)
         contentView.addSubview(termsLabel)
+        
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -139,5 +141,9 @@ extension ProfileTermsViewController {
             
             termsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    @objc private func backButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true)
     }
 }

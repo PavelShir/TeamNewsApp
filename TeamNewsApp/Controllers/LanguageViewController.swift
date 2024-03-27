@@ -77,6 +77,8 @@ class LanguageViewController: UIViewController {
         view.addSubview(backButton)
         view.addSubview(englishButton)
         view.addSubview(russianButton)
+        
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -108,5 +110,9 @@ extension LanguageViewController {
            russianButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20),
            russianButton.heightAnchor.constraint(equalToConstant: 56),
         ])
+    }
+    
+    @objc private func backButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true)
     }
 }

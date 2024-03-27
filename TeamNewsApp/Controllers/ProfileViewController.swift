@@ -51,6 +51,7 @@ class ProfileViewController: UIViewController {
     
     private let languageButton: UIButton = {
         let languageButton = UIButton(title: "Language", picName: "greaterthan")
+        languageButton.addTarget(self, action: #selector(languageTapped), for: .touchUpInside)
         
         return languageButton
     }()
@@ -140,8 +141,14 @@ class ProfileViewController: UIViewController {
         ])
     }
     
+    @objc private func languageTapped(_ sender: UIButton) {
+        let termsVC = LanguageViewController()
+        termsVC.modalPresentationStyle = .fullScreen
+        present(termsVC, animated: true)
+    }
+    
     @objc private func termsTapped(_ sender: UIButton) {
-        let termsVC = TermsViewController()
+        let termsVC = ProfileTermsViewController()
         termsVC.modalPresentationStyle = .fullScreen
         present(termsVC, animated: true)
     }
