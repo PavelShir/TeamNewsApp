@@ -46,7 +46,7 @@ Results source: NEP/Edison via Reuters.
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         element.tintColor = .white
         element.translatesAutoresizingMaskIntoConstraints = false
         return element

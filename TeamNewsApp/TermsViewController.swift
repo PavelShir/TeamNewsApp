@@ -1,5 +1,5 @@
 //
-//  ProfileTermsViewController.swift
+//  TermsViewController.swift
 //  TeamNewsApp
 //
 //  Created by Сергей П on 20.03.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileTermsViewController: UIViewController {
+class TermsViewController: UIViewController {
     
     //MARK: - UI - Scroll View
     
@@ -56,7 +56,7 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, ad
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         element.tintColor = UIColor(named: K.Colors.greyPrimary)
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -97,14 +97,12 @@ Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, ad
         contentView.addSubview(nameVCLabel)
         contentView.addSubview(backButton)
         contentView.addSubview(termsLabel)
-        
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
 }
 
 //MARK: - Setup Constraints
 
-extension ProfileTermsViewController {
+extension TermsViewController {
     
     private func setupConstraints() {
         
@@ -141,9 +139,5 @@ extension ProfileTermsViewController {
             
             termsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-    }
-    
-    @objc private func backButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true)
     }
 }

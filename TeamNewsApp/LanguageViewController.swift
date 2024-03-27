@@ -23,7 +23,7 @@ class LanguageViewController: UIViewController {
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         element.tintColor = UIColor(named: K.Colors.greyPrimary)
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -77,8 +77,6 @@ class LanguageViewController: UIViewController {
         view.addSubview(backButton)
         view.addSubview(englishButton)
         view.addSubview(russianButton)
-        
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -110,9 +108,5 @@ extension LanguageViewController {
            russianButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20),
            russianButton.heightAnchor.constraint(equalToConstant: 56),
         ])
-    }
-    
-    @objc private func backButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true)
     }
 }
