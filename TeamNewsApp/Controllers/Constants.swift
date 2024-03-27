@@ -18,11 +18,11 @@ struct K {
         static let purplePrimary = "PurplePrimary"
     }
     enum Fonts {
-        static let vcNameFont = UIFont.boldSystemFont(ofSize: 28)
-        static let articleNameFont = UIFont.boldSystemFont(ofSize: 22)
-        static let buttonFont = UIFont.boldSystemFont(ofSize: 20)
+        static let vcNameFont = UIFont.boldSystemFont(ofSize: 26)
+        static let articleNameFont = UIFont.boldSystemFont(ofSize: 20)
+        static let buttonFont = UIFont.boldSystemFont(ofSize: 18)
         static let authorNameFont = UIFont.boldSystemFont(ofSize: 16)
-        static let textFont = UIFont.systemFont(ofSize: 18)
+        static let textFont = UIFont.systemFont(ofSize: 16)
         static let categoryFont = UIFont.systemFont(ofSize: 12)
     }
 }

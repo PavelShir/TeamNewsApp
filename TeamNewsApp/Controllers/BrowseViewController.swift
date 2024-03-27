@@ -317,11 +317,11 @@ class BrowseViewController: UIViewController, UICollectionViewDelegate, UICollec
         guard let activeCategory = activeCategory,
               let article = newsArticlesDict[activeCategory]?[indexPath.row] else { return }
         
-        let detailVC = BrowseDetailViewController()
+        let detailVC = ArticleViewController()
         detailVC.article = article
         detailVC.category = activeCategory
-        navigationController?.pushViewController(detailVC, animated: true)
-        navigationController?.navigationBar.tintColor = .white
+        detailVC.modalPresentationStyle = .fullScreen
+        present(detailVC, animated: true)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
