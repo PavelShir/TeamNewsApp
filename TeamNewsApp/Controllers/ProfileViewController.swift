@@ -49,21 +49,23 @@ class ProfileViewController: UIViewController {
         return mailLaibel
     }()
     
-    private let languageButton: UIButton = {
+    private lazy var languageButton: UIButton = {
         let languageButton = UIButton(title: "Language", picName: "greaterthan")
+        languageButton.addTarget(self, action: #selector(languageTapped), for: .touchUpInside)
         
         return languageButton
     }()
     
-    private let termsButton: UIButton = {
+    private lazy var termsButton: UIButton = {
         let termsButton = UIButton(title: "Terms & Conditions", picName: "greaterthan")
         termsButton.addTarget(self, action: #selector(termsTapped), for: .touchUpInside)
         
         return termsButton
     }()
     
-    private let signOutButton: UIButton = {
+    private lazy var signOutButton: UIButton = {
         let signOutButton = UIButton(title: "Sign Out", picName: "rectangle.portrait.and.arrow.forward")
+        signOutButton.addTarget(self, action: #selector(signOutTapped), for: .touchUpInside)
         
         return signOutButton
     }()
@@ -140,14 +142,27 @@ class ProfileViewController: UIViewController {
         ])
     }
     
-    @objc private func termsTapped(_ sender: UIButton) {
-        let termsVC = TermsViewController()
+    @objc private func languageTapped(_ sender: UIButton) {
+        let termsVC = LanguageViewController()
         termsVC.modalPresentationStyle = .fullScreen
         present(termsVC, animated: true)
     }
     
+    @objc private func termsTapped(_ sender: UIButton) {
+        let termsVC = ProfileTermsViewController()
+        termsVC.modalPresentationStyle = .fullScreen
+        present(termsVC, animated: true)
+    }
+    
+    @objc private func signOutTapped(_ sender: UIButton) {
+        guard let tabBarController else { return }
+        if let first = tabBarController.presentingViewController, let second = first.presentingViewController {
+            first.view.isHidden = true
+            second.dismiss(animated: true)
+        }
+    }
+    
     @objc private func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self

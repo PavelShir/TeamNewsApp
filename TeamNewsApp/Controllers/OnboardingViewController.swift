@@ -13,7 +13,7 @@ class OnboardingViewController: UIPageViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
-    private let nextButton: UIButton = {
+    private lazy var nextButton: UIButton = {
         let nextButton = UIButton(type: .system)
         nextButton.backgroundColor = .mainBlue
         nextButton.layer.cornerRadius = 12
@@ -27,11 +27,13 @@ class OnboardingViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configure()
+    }
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
@@ -43,7 +45,10 @@ class OnboardingViewController: UIPageViewController {
     private func configure(){
         dataSource = self
         delegate = self
-        
+        if nextButton.currentTitle == "Get Started" {
+            nextButton.setTitle("Next", for: .normal)
+            pages = []
+        }
         pages.append(OnboardingPageViewController(.page1))
         pages.append(OnboardingPageViewController(.page2))
         pages.append(OnboardingPageViewController(.page3))
@@ -91,6 +96,7 @@ class OnboardingViewController: UIPageViewController {
         loginVC.modalPresentationStyle = .fullScreen
         present(loginVC, animated: true)
     }
+    
 }
 
 extension OnboardingViewController: UIPageViewControllerDataSource {

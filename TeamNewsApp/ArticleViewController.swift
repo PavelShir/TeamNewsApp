@@ -9,9 +9,6 @@ import UIKit
 
 class ArticleViewController: UIViewController {
     
-    var category: String?
-    var article: NewsArticle?
-    
     //MARK: - UI - Scroll View
     
     private lazy var scrollView: UIScrollView = {
@@ -29,17 +26,27 @@ class ArticleViewController: UIViewController {
     
     //MARK: - UI
     
+    private let paragraphName = "Result"
+    
+    private let paragraph = """
+Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races.
+
+For more detailed state results click on the States A-Z links at the bottom of this page. Results source: NEP/Edison via Reuters.
+
+Leads in individual states may change from one party to another as all the votes are counted. Select a state for detailed results, and select the Senate, House or Governor tabs to view those races. For more detailed state results click on the States A-Z links at the bottom of this page.
+
+Results source: NEP/Edison via Reuters.
+"""
     private lazy var articleImage: UIImageView = {
         let element = UIImageView()
-//        element.image = UIImage(named: "articleImage")
-        element.contentMode = .scaleAspectFill
+        element.image = UIImage(named: "articleImage")
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
     
     private lazy var backButton: UIButton = {
         let element = UIButton()
-        element.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        element.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         element.tintColor = .white
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -63,12 +70,12 @@ class ArticleViewController: UIViewController {
     
     private lazy var categoryLabel: UILabel = {
         let element = UILabel()
-        element.text = "Test"
+        element.text = "Politics"
         element.numberOfLines = 1
         element.textColor = .white
         element.font = K.Fonts.categoryFont
         element.backgroundColor = UIColor(named: K.Colors.purplePrimary)
-        element.layer.cornerRadius = 5
+        element.layer.cornerRadius = 16
         element.textAlignment = .center
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -76,30 +83,22 @@ class ArticleViewController: UIViewController {
     
     private lazy var articleNameLabel: UILabel = {
         let element = UILabel()
-        element.text = ""
+        element.text = "The latest situation in the presidential election"
         element.numberOfLines = 0
         element.textColor = .white
         element.font = K.Fonts.articleNameFont
         element.textAlignment = .left
-        element.layer.shadowColor = UIColor.black.cgColor
-        element.layer.shadowOffset = CGSize(width: 0, height: 0)
-        element.layer.shadowOpacity = 0.7
-        element.layer.shadowRadius = 3
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
     
     private lazy var autorNameLabel: UILabel = {
         let element = UILabel()
-        element.text = ""
+        element.text = "John Doe"
         element.numberOfLines = 1
         element.textColor = .white
         element.font = K.Fonts.authorNameFont
         element.textAlignment = .left
-        element.layer.shadowColor = UIColor.black.cgColor
-        element.layer.shadowOffset = CGSize(width: 0, height: 0)
-        element.layer.shadowOpacity = 0.7
-        element.layer.shadowRadius = 3
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
@@ -111,10 +110,6 @@ class ArticleViewController: UIViewController {
         element.textColor = UIColor(named: K.Colors.greyLight)
         element.font = K.Fonts.textFont
         element.textAlignment = .left
-        element.layer.shadowColor = UIColor.white.cgColor
-        element.layer.shadowOffset = CGSize(width: 0, height: 0)
-        element.layer.shadowOpacity = 0.7
-        element.layer.shadowRadius = 1
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
@@ -129,7 +124,7 @@ class ArticleViewController: UIViewController {
     
     private lazy var paragraphNameLabel: UILabel = {
         let element = UILabel()
-        element.text = ""
+        element.text = paragraphName
         element.numberOfLines = 0
         element.textColor = UIColor(named: K.Colors.blackPrimary)
         element.font = K.Fonts.authorNameFont
@@ -140,7 +135,29 @@ class ArticleViewController: UIViewController {
     
     private lazy var paragraphLabel: UILabel = {
         let element = UILabel()
-        element.text = ""
+        element.text = paragraph
+        element.numberOfLines = 0
+        element.textColor = UIColor(named: K.Colors.greyDarker)
+        element.font = K.Fonts.textFont
+        element.textAlignment = .left
+        element.translatesAutoresizingMaskIntoConstraints = false
+        return element
+    }()
+    
+    private lazy var paragraphNameLabel2: UILabel = {
+        let element = UILabel()
+        element.text = paragraphName
+        element.numberOfLines = 0
+        element.textColor = UIColor(named: K.Colors.blackPrimary)
+        element.font = K.Fonts.authorNameFont
+        element.textAlignment = .left
+        element.translatesAutoresizingMaskIntoConstraints = false
+        return element
+    }()
+    
+    private lazy var paragraphLabel2: UILabel = {
+        let element = UILabel()
+        element.text = paragraph
         element.numberOfLines = 0
         element.textColor = UIColor(named: K.Colors.greyDarker)
         element.font = K.Fonts.textFont
@@ -156,51 +173,6 @@ class ArticleViewController: UIViewController {
         
         setViews()
         setupConstraints()
-        displayArticle()
-    }
-    
-    @objc private func backButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true)
-    }
-    
-    @objc private func bookmarkButtonTapped(_ sender: UIButton) {
-    }
-    
-    @objc private func shareButtonButton(_ sender: UIButton) {
-    }
-    
-    //MARK: - Load Article
-    
-    private func displayArticle() {
-        loadImage(from: article?.urlToImage)
-        
-        articleNameLabel.text = article?.title
-        paragraphLabel.text = article?.description
-        
-        if let categoryText = category, !categoryText.isEmpty {
-            categoryLabel.text = " \(categoryText.uppercased()) "
-        } else {
-            categoryLabel.isHidden = true
-        }
-        autorNameLabel.text = article?.author
-    }
-    
-    private func loadImage(from urlString: String?) {
-        guard let urlString = urlString, let url = URL(string: urlString) else {
-            articleImage.image = UIImage(named: "stock")
-            return
-        }
-
-        Task {
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let image = UIImage(data: data) ?? UIImage(named: "stock")
-                articleImage.image = image
-            } catch {
-                articleImage.image = UIImage(named: "stock")
-                print("Ошибка загрузки изображения: \(error)")
-            }
-        }
     }
     
     //MARK: - Set Views
@@ -227,10 +199,8 @@ class ArticleViewController: UIViewController {
         
         paragraphStack.addArrangedSubview(paragraphNameLabel)
         paragraphStack.addArrangedSubview(paragraphLabel)
-        
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
-        shareButton.addTarget(self, action: #selector(shareButtonButton), for: .touchUpInside)
+        paragraphStack.addArrangedSubview(paragraphNameLabel2)
+        paragraphStack.addArrangedSubview(paragraphLabel2)
     }
 }
 
@@ -260,8 +230,6 @@ extension ArticleViewController {
             articleImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             articleImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             articleImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            articleImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            articleImage.heightAnchor.constraint(equalTo: articleImage.widthAnchor),
             
             backButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 72),
             backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
@@ -281,12 +249,12 @@ extension ArticleViewController {
             categoryLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 72),
             categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
             categoryLabel.heightAnchor.constraint(equalToConstant: 32),
-//            categoryLabel.widthAnchor.constraint(equalToConstant: 75),
+            categoryLabel.widthAnchor.constraint(equalToConstant: 75),
             
             articleNameLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 16),
             articleNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
             articleNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -20),
-//            articleNameLabel.heightAnchor.constraint(equalToConstant: 54),
+            articleNameLabel.heightAnchor.constraint(equalToConstant: 54),
             
             autorNameLabel.topAnchor.constraint(equalTo: articleNameLabel.bottomAnchor, constant: 24),
             autorNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),

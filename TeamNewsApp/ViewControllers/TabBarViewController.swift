@@ -8,6 +8,8 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
+    
+    private let browseVC = UINavigationController(rootViewController: BrowseViewController())
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +19,7 @@ class TabBarViewController: UITabBarController {
 
     private func generateTabBar() {
         viewControllers = [
-        generateVC(viewController: BrowseViewController(), title: "Browse", image: UIImage(systemName: "house")),
+        generateVC(viewController: browseVC, title: "Browse", image: UIImage(systemName: "house")),
         generateVC(viewController: CategoriesViewController(), title: "Categories", image: UIImage(systemName: "list.bullet.circle")),
         generateVC(viewController: BookmarksViewController(), title: "Bookmarks", image: UIImage(systemName: "bookmark")),
         generateVC(viewController: ProfileViewController(), title: "Profile", image: UIImage(systemName: "person.crop.circle"))
@@ -36,6 +38,5 @@ class TabBarViewController: UITabBarController {
             tabBar.layer.cornerRadius = 20
             tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
-
 }
 
