@@ -41,6 +41,13 @@ class LanguageViewController: UIViewController {
         setupConstraints()
     }
     
+    override func loadViewIfNeeded() {
+        super.loadViewIfNeeded()
+        
+        setViews()
+        setupConstraints()
+    }
+    
     //MARK: - ButtonTapped
     
     @objc private func backButtonTapped(_ sender: UIButton) {
@@ -48,17 +55,19 @@ class LanguageViewController: UIViewController {
     }
     
     @objc private func englishButtonTapped(_ sender: UIButton) {
+        englishButton.isHidden = true
+        russianButton.isHidden = true
         englishButton = UIButton(title: "English", selected: true)
         russianButton = UIButton(title: "Russian", selected: false)
-        setViews()
-        setupConstraints()
+        loadViewIfNeeded()
     }
     
     @objc private func russianButtonTapped(_ sender: UIButton) {
+        englishButton.isHidden = true
+        russianButton.isHidden = true
         englishButton = UIButton(title: "English", selected: false)
         russianButton = UIButton(title: "Russian", selected: true)
-        setViews()
-        setupConstraints()
+        loadViewIfNeeded()
     }
     
     //MARK: - Set Views

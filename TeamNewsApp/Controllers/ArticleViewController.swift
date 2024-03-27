@@ -31,7 +31,6 @@ class ArticleViewController: UIViewController {
     
     private lazy var articleImage: UIImageView = {
         let element = UIImageView()
-//        element.image = UIImage(named: "articleImage")
         element.contentMode = .scaleAspectFill
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
@@ -62,14 +61,15 @@ class ArticleViewController: UIViewController {
     }()
     
     private lazy var categoryLabel: UILabel = {
-        let element = UILabel()
-        element.text = "Test"
+        let element = PaddingLabel(withInsets: 8, 8, 16, 16)
+        element.text = ""
         element.numberOfLines = 1
         element.textColor = .white
         element.font = K.Fonts.categoryFont
         element.backgroundColor = UIColor(named: K.Colors.purplePrimary)
-        element.layer.cornerRadius = 5
+        element.layer.cornerRadius = 16
         element.textAlignment = .center
+        element.clipsToBounds = true
         element.translatesAutoresizingMaskIntoConstraints = false
         return element
     }()
@@ -281,12 +281,10 @@ extension ArticleViewController {
             categoryLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 72),
             categoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
             categoryLabel.heightAnchor.constraint(equalToConstant: 32),
-//            categoryLabel.widthAnchor.constraint(equalToConstant: 75),
             
             articleNameLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 16),
             articleNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
             articleNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -20),
-//            articleNameLabel.heightAnchor.constraint(equalToConstant: 54),
             
             autorNameLabel.topAnchor.constraint(equalTo: articleNameLabel.bottomAnchor, constant: 24),
             autorNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
@@ -304,5 +302,41 @@ extension ArticleViewController {
             
             paragraphStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+}
+
+//MARK: - Label with padding
+
+class PaddingLabel: UILabel {
+
+    var topInset: CGFloat
+    var bottomInset: CGFloat
+    var leftInset: CGFloat
+    var rightInset: CGFloat
+
+    required init(withInsets top: CGFloat, _ bottom: CGFloat,_ left: CGFloat,_ right: CGFloat) {
+        self.topInset = top
+        self.bottomInset = bottom
+        self.leftInset = left
+        self.rightInset = right
+        super.init(frame: CGRect.zero)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        get {
+            var contentSize = super.intrinsicContentSize
+            contentSize.height += topInset + bottomInset
+            contentSize.width += leftInset + rightInset
+            return contentSize
+        }
     }
 }
