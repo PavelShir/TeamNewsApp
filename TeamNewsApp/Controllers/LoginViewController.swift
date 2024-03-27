@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
         return passwordTextField
     }()
     
-    private let repeatPasswordTextField: UITextField = {
+    private lazy var repeatPasswordTextField: UITextField = {
         let repeatPasswordTextField = UITextField(picName: "lock", isSecure: true)
         repeatPasswordTextField.placeholder = "Repeat Password"
         repeatPasswordTextField.isSecureTextEntry = true
@@ -76,7 +76,7 @@ class LoginViewController: UIViewController {
         return repeatPasswordTextField
     }()
     
-    private let signInButton: UIButton = {
+    private lazy var signInButton: UIButton = {
         let signInButton = UIButton(type: .system)
         signInButton.backgroundColor = .mainBlue
         signInButton.layer.cornerRadius = 12
@@ -97,7 +97,7 @@ class LoginViewController: UIViewController {
         return signInLabel
     }()
     
-    private let signInBottomButton: UIButton = {
+    private lazy var signInBottomButton: UIButton = {
         let signInBottomButton = UIButton(type: .system)
         signInBottomButton.setTitle("Sign In", for: .normal)
         signInBottomButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
     }()
     
     init() {
-        if let user = UserStorageManager.shared.getUserData() {
+        if UserStorageManager.shared.getUserData() != nil {
             mode = .signIn
         } else {
             mode = .signUp
@@ -212,6 +212,7 @@ class LoginViewController: UIViewController {
             } else {
                 let alert = UIAlertController(title: "Wrong email or password", message: "Please, check it carefully and try again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
+                present(alert, animated: true)
             }
         } else {
             if passwordCompareLabel.textColor == .green {
@@ -227,6 +228,7 @@ class LoginViewController: UIViewController {
             } else {
                 let alert = UIAlertController(title: "Passwords doesn't match", message: "Please, try to repeat new password again", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
+                present(alert, animated: true)
             }
         }
     }

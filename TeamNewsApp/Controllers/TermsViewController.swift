@@ -19,7 +19,7 @@ class TermsViewController: UIViewController {
         return termsLabel
     }()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let backButton = UIButton()
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         backButton.imageView?.tintColor = .gray
