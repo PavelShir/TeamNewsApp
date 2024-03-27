@@ -150,6 +150,8 @@
 				CBCA9FEB2BA88F9F0016C292 /* OnboardingPageViewController.swift */,
 				313008C12BA78A4900F21BAF /* TabBarViewController.swift */,
 				31676CF12BB22BC2003CB38C /* BrowseViewController.swift */,
+				313B3B342BB3580F004B837D /* BrowseCollectionViewCell.swift */,
+				313B3B362BB3581E004B837D /* BrowseDetailViewController.swift */,
 				31676CF32BB22BEA003CB38C /* CategoriesViewController.swift */,
 				31676CF52BB22C08003CB38C /* BookmarksViewController.swift */,
 				CBCAF5272BAAFB960020153F /* ProfileViewController.swift */,
@@ -159,8 +161,6 @@
 				31676D022BB24C6A003CB38C /* LanguageViewController.swift */,
 				31676D002BB24C5B003CB38C /* Constants.swift */,
 				31676D032BB24C6A003CB38C /* ProfileTermsViewController.swift */,
-				313B3B342BB3580F004B837D /* BrowseCollectionViewCell.swift */,
-				313B3B362BB3581E004B837D /* BrowseDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
